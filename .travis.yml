@@ -1,0 +1,16 @@
+language: cpp
+sudo: false
+os: linux
+addons:
+  apt:
+    packages:
+    - cmake
+    - time
+
+script:
+  - gcc -v && g++ -v && cmake --version
+  - mkdir project/
+  - cd project
+  - cmake ..
+  - make
+  - src/main
