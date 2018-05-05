@@ -12,6 +12,5 @@ script:
   - mkdir project/
   - cd project
   - cmake ..
-  - env CTEST_OUTPUT_ON_FAILURE=1 make
-  - src/main
-  - ctest
+  - make
+  - env CTEST_OUTPUT_ON_FAILURE=1 ctest
