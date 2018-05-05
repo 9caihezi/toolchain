@@ -14,3 +14,8 @@ script:
   - cmake ..
   - make
   - env CTEST_OUTPUT_ON_FAILURE=1 ctest
+
+cache:
+  directories:
+    - project/googletest-download/
+    - project/googletest-src/
