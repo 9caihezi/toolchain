@@ -19,4 +19,8 @@ TEST(FactorialTest, Positive) {
   EXPECT_EQ(40320, Factorial(8));
 }
 
+TEST(FactorialTest, Failure) {
+  EXPECT_EQ(2, Factorial(1));
+}
+
 }
