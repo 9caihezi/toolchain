@@ -8,8 +8,7 @@ addons:
     - time
 
 script:
-  - gcc -v && g++ -v && cmake --version
-  - mkdir project/
+  - mkdir -p project/
   - cd project
   - cmake ..
   - make
