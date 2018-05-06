@@ -2,6 +2,7 @@
 #define SRC_INTERPRETER_PROGRAM_H
 
 #include <map>
+#include <memory>
 #include <sstream>
 #include <string>
 
@@ -15,7 +16,7 @@ public:
   ~Program() = default;
   void Run(std::istream&, std::ostream&);
 private:
-  ProgramState state_;
+  std::unique_ptr<ProgramState> state_;
   std::string program_;
   size_t cursor_ = 0;
   std::map<size_t, size_t> jump_table_;

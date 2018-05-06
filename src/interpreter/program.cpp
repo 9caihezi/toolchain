@@ -64,35 +64,36 @@ Program::Program(istream& input) {
 }
 
 void Program::Run(istream& input, ostream& output) {
+  state_ = std::unique_ptr<ProgramState>(new ProgramState());
   cursor_ = 0;
   while (cursor_ < program_.size()) {
     // program_[cursor_] is valid
     switch(program_[cursor_]) {
     case '>':
-      state_.IncCursor();
+      state_->IncCursor();
       break;
     case '<':
-      state_.DecCursor();
+      state_->DecCursor();
       break;
     case '+':
-      state_.IncData();
+      state_->IncData();
       break;
     case '-':
-      state_.DecData();
+      state_->DecData();
       break;
     case '.':
-      state_.Output(output);
+      state_->Output(output);
       break;
     case ',':
-      state_.Input(input);
+      state_->Input(input);
       break;
     case '[':
-      if (state_.IsZero()) {
+      if (state_->IsZero()) {
         cursor_ = jump_table_[cursor_];
       }
       break;
     case ']':
-      if (!state_.IsZero()) {
+      if (!state_->IsZero()) {
         cursor_ = jump_table_[cursor_];
       }
       break;
