@@ -1,4 +1,4 @@
-if [ "$TRAVIS_BRANCH" != "development" ]; then 
+if [ "$TRAVIS_BRANCH" != "development" ]; then
     exit 0;
 fi
 export GIT_COMMITTER_EMAIL="9caihezi@gmail.com"
