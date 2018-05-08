@@ -14,6 +14,9 @@ script:
   - make
   - env CTEST_OUTPUT_ON_FAILURE=1 ctest
 
+after_success:
+  - ./travis_merge_script.sh
+
 cache:
   directories:
     - project/googletest-download/
