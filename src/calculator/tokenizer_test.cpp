@@ -3,7 +3,7 @@
 #include <sstream>
 
 #include "gtest/gtest.h"
-//#include "gmock/gmock.h"
+#include "gmock/gmock.h"
 
 namespace {
 
@@ -12,7 +12,7 @@ using namespace std;
 TEST(Tokenizer, Simple) {
 	istringstream iss("abc  _de0f ge_00zh 09+ 1abc 111.555");
 	auto tokens = Tokenize(iss);
-	//EXPECT_THAT(tokens, testing::SizeIs(8));
+	EXPECT_THAT(tokens, testing::SizeIs(8));
 	EXPECT_EQ(tokens.size(), 8);
 	EXPECT_EQ(tokens[0]->type, TokenType::Identifier);
 	EXPECT_EQ(tokens[0]->string_value, "abc");
