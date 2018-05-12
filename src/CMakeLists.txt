@@ -6,3 +6,4 @@ target_link_libraries(gtest_test gtest_main)
 add_test(gtest_test gtest_test --gtest_color=yes)
 
 add_subdirectory(interpreter)
+add_subdirectory(calculator)
