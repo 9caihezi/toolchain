@@ -213,19 +213,56 @@ private:
     double value_;
 };
 
-/*
 class ExactMatchDfa : public Dfa {
-}
-*/
+public:
+    ExactMatchDfa(string expected, TokenType type)
+        : expected_(std::move(expected)),
+          type_(type) {}
+    bool AddChar(char c) override {
+        if (data_.size() < expected_.size() &&
+            expected_[data_.size()] == c &&
+            matching_) {
+            data_.push_back(c);
+            return true;
+        }
+        matching_ = false;
+        return false;
+    }
+    std::unique_ptr<Token> Finalize() override {
+        if (Finalizable()) {
+            return MakeToken(type_, data_);
+        } else {
+            return MakeToken(TokenType::Error, data_);
+        }
+    }
+    bool Finalizable() override {
+        return data_ == expected_;
+    }
+    void Reset() override {
+        matching_ = true;
+        data_.clear();
+    }
+private:
+    const string expected_;
+    const TokenType type_;
+    bool matching_;
+};
 
 
 deque<Dfa*> GetAllDfa() {
 	static vector<std::unique_ptr<Dfa>> dfa_list;
 	if (dfa_list.empty()) {
 		dfa_list.emplace_back(new WhiteSpaceDfa());
-		dfa_list.emplace_back(new IdentifierDfa());
 		dfa_list.emplace_back(new IntegerDfa());
 		dfa_list.emplace_back(new FloatDfa());
+		dfa_list.emplace_back(new ExactMatchDfa("+", TokenType::OpPlus));
+		dfa_list.emplace_back(new ExactMatchDfa("-", TokenType::OpMinus));
+		dfa_list.emplace_back(new ExactMatchDfa("*", TokenType::OpMultiply));
+		dfa_list.emplace_back(new ExactMatchDfa("/", TokenType::OpDivide));
+		dfa_list.emplace_back(new ExactMatchDfa("==", TokenType::OpEqual));
+		dfa_list.emplace_back(new ExactMatchDfa("(", TokenType::OpOpenParen));
+		dfa_list.emplace_back(new ExactMatchDfa(")", TokenType::OpCloseParen));
+		dfa_list.emplace_back(new IdentifierDfa());
 	}
     deque<Dfa*> result;
     for (const auto& uptr : dfa_list) {
